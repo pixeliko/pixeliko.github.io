@@ -1,0 +1,463 @@
+@import "bower_components/cells-sass/main";
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+:host {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+:host(.full) {
+  display: block;
+}
+
+:host(.transparent) {
+  vertical-align: baseline;
+}
+
+:host([hidden]), [hidden] {
+  display: none !important;
+}
+
+/**
+ * Empty mixins to set outline for :focus and :active states.
+ * These mixins are meant to be set in an application's theme.
+ * --cells-global-focus, --cells-global-active
+ */
+@each $state in "focus", "active" {
+  ::slotted(button:#{$state}) {
+    @apply --cells-global-#{$state};
+  }
+}
+
+/* Default buttons */
+
+::slotted(*) {
+  font-family: var(--cells-fontDefault, sans-serif);
+  text-decoration: none;
+  cursor: pointer;
+  padding: rem(4px) 1.25em;
+  display: block;
+  line-height: normal;
+  background-color: var(--cells-st-button-bg-color, var(--bbva-core-blue, #004481));
+  background-repeat: no-repeat;
+  color: var(--cells-st-button-text-color, #fff);
+  border: none;
+  font-size: var(--cells-st-button-text-size, rem(14px));
+  font-weight: 700;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border-radius: var(--cells-st-button-border-radius, 1px);
+  min-height: var(--cells-st-button-min-height, var(--cells-st-button-m-min-height, rem(50px)));
+  min-width: rem(144px);
+
+  @apply --cells-st-button;
+
+  .subtext {
+    font-size: var(--cells-st-button-subtext-size, rem(11px));
+    font-weight: 500;
+    display: block;
+
+    @apply --cells-st-button-subtext;
+  }
+}
+
+::slotted(:focus:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-focus, #053967);
+  color: var(--cells-st-button-text-color-focus, #fff);
+
+  @apply --cells-st-button-focus;
+}
+
+::slotted(:hover:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-hover, #053967);
+  color: var(--cells-st-button-text-color-hover, #fff);
+
+  @apply --cells-st-button-hover;
+}
+
+::slotted(:active:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-active, #053967);
+  color: var(--cells-st-button-text-color-active, #fff);
+
+  @apply --cells-st-button-active;
+}
+
+::slotted(:disabled) {
+  cursor: default;
+  background-color: var(--cells-st-button-bg-color-disabled, #E9E9E9);
+
+  @apply --cells-st-button-disabled;
+}
+
+::slotted(*) {
+  :host(.full) & {
+    width: 100%;
+
+    @apply --cells-st-button-full;
+  }
+
+  /* Primary buttons */
+
+  :host(.primary) & {
+    background-color: var(--cells-st-button-bg-color-primary, var(--bbva-core-blue, #004481));
+    color: var(--cells-st-button-text-color-primary, #fff);
+
+    @apply --cells-st-button-primary;
+  }
+
+  /* Secondary buttons */
+
+  :host(.secondary) & {
+    background-color: var(--cells-st-button-bg-color-secondary, var(--bbva-medium-blue, #237ABA));
+    color: var(--cells-st-button-text-color-secondary, #fff);
+
+    @apply --cells-st-button-secondary;
+  }
+
+  /* Tertiary buttons */
+
+  :host(.tertiary) & {
+    background-color: var(--cells-st-button-bg-color-tertiary, var(--bbva-core-blue, #004481));
+    color: var(--cells-st-button-text-color-tertiary, #fff);
+
+    @apply --cells-st-button-tertiary;
+  }
+
+  /* Quaternary buttons */
+
+  :host(.quaternary) & {
+    background-color: var(--cells-st-button-bg-color-quaternary, var(--bbva-core-blue, #004481));
+    color: var(--cells-st-button-text-color-quaternary, #fff);
+
+    @apply --cells-st-button-quaternary;
+  }
+
+  /* Neutral buttons */
+
+  :host(.neutral) & {
+    background-color: var(--cells-st-button-bg-color-neutral, var(--bbva-core-blue, #004481));
+    color: var(--cells-st-button-text-color-neutral, #fff);
+
+    @apply --cells-st-button-neutral;
+  }
+
+  /* Link buttons */
+
+  :host(.link) & {
+    background-color: var(--cells-st-button-bg-color-link, transparent);
+    color: var(--cells-st-button-text-color-link, var(--bbva-medium-blue, #237ABA));
+
+    @apply --cells-st-button-link;
+  }
+
+  /* Transparent buttons */
+
+  :host(.transparent) & {
+    background-color: var(--cells-st-button-bg-color-transparent, transparent);
+    padding: 0;
+    min-height: 0;
+    min-width: 0;
+    color: var(--cells-st-button-text-color-transparent, var(--bbva-medium-blue, #237ABA));
+    border: 0;
+    font-size: inherit;
+    display: inline;
+    vertical-align: baseline;
+
+    @apply --cells-st-button-transparent;
+  }
+
+  /* Composed buttons */
+
+  :host(.composed) & {
+    padding: rem(4px) 1em;
+    min-width: 0;
+
+    @apply --cells-st-button-composed;
+
+    .btn-contents {
+      display: flex;
+      align-items: center;
+
+      @apply --cells-st-button-composed-contents;
+    }
+
+    .btn-text {
+      padding: 0 0.25em;
+
+      @apply --cells-st-button-composed-text;
+    }
+
+    .btn-icon {
+      flex-shrink: 0;
+      padding: 0 0.25em;
+
+      @apply --cells-st-button-composed-icon;
+    }
+  }
+
+  /* Buttons content alignment */
+  :host(.content-centered) &,
+  .content-centered {
+    text-align: center;
+    justify-content: center;
+
+    @apply --cells-st-button-content-centered;
+  }
+
+  :host(.content-left) &,
+  .content-left {
+    text-align: left;
+    justify-content: flex-start;
+
+    @apply --cells-st-button-content-left;
+  }
+
+  :host(.content-right) &,
+  .content-right {
+    text-align: right;
+    justify-content: flex-end;
+
+    @apply --cells-st-button-content-right;
+  }
+
+  /* Button vertical sizes */
+
+  :host(.size-xl) & {
+    min-height: var(--cells-st-button-xl-min-height, rem(66px));
+
+    @apply --cells-st-button-size-xl;
+  }
+
+  :host(.size-l) & {
+    min-height: var(--cells-st-button-l-min-height, rem(58px));
+
+    @apply --cells-st-button-size-l;
+  }
+
+  :host(.size-m) & {
+    min-height: var(--cells-st-button-m-min-height, rem(50px));
+
+    @apply --cells-st-button-size-m;
+  }
+
+  :host(.size-s) & {
+    min-height: var(--cells-st-button-s-min-height, rem(42px));
+
+    @apply --cells-st-button-size-s;
+  }
+
+  :host(.size-xs) & {
+    min-height: var(--cells-st-button-xs-min-height, rem(34px));
+
+    @apply --cells-st-button-size-xs;
+  }
+}
+
+//////
+/* Primary buttons */
+:host(.primary) ::slotted(:focus:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-primary-focus, #053967);
+  color: var(--cells-st-button-text-color-primary-focus, #fff);
+
+  @apply --cells-st-button-primary-focus;
+}
+
+:host(.primary) ::slotted(:hover:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-primary-hover, #053967);
+  color: var(--cells-st-button-text-color-primary-hover, #fff);
+
+  @apply --cells-st-button-primary-hover;
+}
+
+:host(.primary) ::slotted(:active:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-primary-active, #053967);
+  color: var(--cells-st-button-text-color-primary-active, #fff);
+
+  @apply --cells-st-button-primary-active;
+}
+
+:host(.primary) ::slotted(:disabled) {
+  background-color: var(--cells-st-button-bg-color-primary-disabled, #E9E9E9);
+
+  @apply --cells-st-button-primary-disabled;
+}
+
+/* Secondary buttons */
+:host(.secondary) ::slotted(:focus:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-secondary-focus, #1B6092);
+  color: var(--cells-st-button-text-color-secondary-focus, #fff);
+
+  @apply --cells-st-button-secondary-focus;
+}
+
+:host(.secondary) ::slotted(:hover:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-secondary-hover, #1B6092);
+  color: var(--cells-st-button-text-color-secondary-hover, #fff);
+
+  @apply --cells-st-button-secondary-hover;
+}
+
+:host(.secondary) ::slotted(:active:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-secondary-active, #1B6092);
+  color: var(--cells-st-button-text-color-secondary-active, #fff);
+
+  @apply --cells-st-button-secondary-active;
+}
+
+:host(.secondary) ::slotted(:disabled) {
+  background-color: var(--cells-st-button-bg-color-secondary-disabled, #E9E9E9);
+
+  @apply --cells-st-button-secondary-disabled;
+}
+
+/* Tertiary buttons */
+:host(.tertiary) ::slotted(:focus:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-tertiary-focus, #053967);
+  color: var(--cells-st-button-text-color-tertiary-focus, #fff);
+
+  @apply --cells-st-button-tertiary-focus;
+}
+
+:host(.tertiary) ::slotted(:hover:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-tertiary-hover, #053967);
+  color: var(--cells-st-button-text-color-tertiary-hover, #fff);
+
+  @apply --cells-st-button-tertiary-hover;
+}
+
+:host(.tertiary) ::slotted(:active:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-tertiary-active, #053967);
+  color: var(--cells-st-button-text-color-tertiary-active, #fff);
+
+  @apply --cells-st-button-tertiary-active;
+}
+
+:host(.tertiary) ::slotted(:disabled) {
+  background-color: var(--cells-st-button-bg-color-tertiary-disabled, #E9E9E9);
+
+  @apply --cells-st-button-tertiary-disabled;
+}
+
+/* Quaternary buttons */
+:host(.quaternary) ::slotted(:focus:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-quaternary-focus, #053967);
+  color: var(--cells-st-button-text-color-quaternary-focus, #fff);
+
+  @apply --cells-st-button-quaternary-focus;
+}
+
+:host(.quaternary) ::slotted(:hover:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-quaternary-hover, #053967);
+  color: var(--cells-st-button-text-color-quaternary-hover, #fff);
+
+  @apply --cells-st-button-quaternary-hover;
+}
+
+:host(.quaternary) ::slotted(:active:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-quaternary-active, #053967);
+  color: var(--cells-st-button-text-color-quaternary-active, #fff);
+
+  @apply --cells-st-button-quaternary-active;
+}
+
+:host(.quaternary) ::slotted(:disabled) {
+  background-color: var(--cells-st-button-bg-color-quaternary-disabled, #E9E9E9);
+
+  @apply --cells-st-button-quaternary-disabled;
+}
+
+/* Neutral buttons */
+:host(.neutral) ::slotted(:focus:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-neutral-focus, #053967);
+  color: var(--cells-st-button-text-color-neutral-focus, #fff);
+
+  @apply --cells-st-button-neutral-focus;
+}
+
+:host(.neutral) ::slotted(:hover:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-neutral-hover, #053967);
+  color: var(--cells-st-button-text-color-neutral-hover, #fff);
+
+  @apply --cells-st-button-neutral-hover;
+}
+
+:host(.neutral) ::slotted(:active:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-neutral-active, #053967);
+  color: var(--cells-st-button-text-color-neutral-active, #fff);
+
+  @apply --cells-st-button-neutral-active;
+}
+
+:host(.neutral) ::slotted(:disabled) {
+  background-color: var(--cells-st-button-bg-color-neutral-disabled, #E9E9E9);
+
+  @apply --cells-st-button-neutral-disabled;
+}
+
+/* Link buttons */
+:host(.link) ::slotted(:focus:not(:disabled)) {
+  color: var(--cells-st-button-text-color-link-focus, var(--bbva-medium-blue, #237ABA));
+  background-color: var(--cells-st-button-bg-color-link-focus, transparent);
+
+  @apply --cells-st-button-link-focus;
+}
+
+:host(.link) ::slotted(:hover:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-link-hover, transparent);
+  color: var(--cells-st-button-text-color-link-hover, var(--bbva-medium-blue, #237ABA));
+
+  @apply --cells-st-button-link-hover;
+}
+
+:host(.link) ::slotted(:active:not(:disabled)) {
+  color: var(--cells-st-button-text-color-link-active, var(--bbva-medium-blue, #237ABA));
+  background-color: var(--cells-st-button-bg-color-link-active, transparent);
+
+  @apply --cells-st-button-link-active;
+}
+
+:host(.link) ::slotted(:disabled) {
+  color: var(--cells-st-button-bg-color-link-disabled, #E9E9E9);
+  background-color: var(--cells-st-button-bg-color-link, transparent);
+
+  @apply --cells-st-button-link-disabled;
+}
+
+/* Transparent buttons */
+:host(.transparent) ::slotted(:focus:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-transparent-focus, transparent);
+  color: var(--cells-st-button-text-color-transparent-focus, var(--bbva-medium-blue, #237ABA));
+
+  @apply --cells-st-button-transparent-focus;
+}
+
+:host(.transparent) ::slotted(:hover:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-transparent-hover, transparent);
+  color: var(--cells-st-button-text-color-transparent-hover, var(--bbva-medium-blue, #237ABA));
+
+  @apply --cells-st-button-transparent-hover;
+}
+
+:host(.transparent) ::slotted(:active:not(:disabled)) {
+  background-color: var(--cells-st-button-bg-color-transparent-active, transparent);
+  color: var(--cells-st-button-text-color-transparent-active, var(--bbva-medium-blue, #237ABA));
+
+  @apply --cells-st-button-transparent-active;
+}
+
+:host(.transparent) ::slotted(:disabled) {
+  @apply --cells-st-button-transparent-disabled;
+}
+
+/* Disabled on dark background */
+
+:host(.on-dark) ::slotted(:disabled) {
+  background-color: var(--cells-st-button-bg-color-disabled-on-dark, rgba(233, 233, 233, 0.3));
+  color: var(--cells-st-button-text-color-disabled-on-dark, rgba(255, 255, 255, 0.3));
+
+  @apply --cells-st-button-disabled-on-dark;
+}

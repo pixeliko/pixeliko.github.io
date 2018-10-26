@@ -1,0 +1,60 @@
+{
+  "name": "cells-template-paper-drawer-panel",
+  "version": "10.0.3",
+  "description": "Template with Polymer paper drawer panel",
+  "keywords": [
+    "template",
+    "pape-scroll-header-panel",
+    "paper-drawer-panel",
+    "one column",
+    "animation-behavior",
+    "polymer",
+    "spec"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.9 - 2",
+    "paper-drawer-panel": "PolymerElements/paper-drawer-panel#1 - 2",
+    "cells-app-drawer": "^10.0.0",
+    "cells-paper-scroll-header-panel": "^10.0.0",
+    "cells-template-animation-behavior": "^10.4.0"
+  },
+  "devDependencies": {
+    "cells-sass": "^2.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "iron-component-page": "PolymerElements/iron-component-page#1 - 2",
+    "cells-demo-helper": "^10.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0"
+  },
+  "resolutions": {
+    "webcomponentsjs": "^1.0"
+  },
+  "variants": {
+    "1.x": {
+      "dependencies": {
+        "polymer": "Polymer/polymer#^1.9",
+        "paper-drawer-panel": "PolymerElements/paper-drawer-panel#^1.0.0",
+        "cells-app-drawer": "^10.0.0",
+        "cells-paper-scroll-header-panel": "^10.0.0",
+        "cells-template-animation-behavior": "^10.3.0"
+      },
+      "devDependencies": {
+        "cells-sass": "^2.0.0",
+        "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+        "iron-component-page": "PolymerElements/iron-component-page#1 - 2",
+        "cells-demo-helper": "^10.0.0",
+        "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7"
+      },
+      "resolutions": {
+        "webcomponentsjs": "^0.7"
+      }
+    }
+  },
+  "main": "cells-template-paper-drawer-panel.html",
+  "composer": {
+    "description": "Template with Polymer __paper drawer panel__",
+    "preview": "cells-template-paper-drawer-panel.jpg",
+    "type": "template",
+    "platforms": "android, ios, desktop",
+    "family": "cells-catalog-templates-family"
+  }
+}

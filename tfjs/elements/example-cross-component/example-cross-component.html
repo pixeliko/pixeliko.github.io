@@ -1,0 +1,51 @@
+<dom-module id="example-cross-component">
+    <template>
+      <style>
+        :host {
+          display: block;
+          position: absolute;
+          right: 1rem;
+          top: .3rem;
+          z-index: 10;
+          background-color: rgba(74, 74, 74, 0.75);
+          border: 2px dashed rgba(74, 74, 74, 0.85);
+          width: 170px;
+          border-radius: 2px;
+          box-sizing: border-box;
+          text-align: center;
+          font-size: .7rem;
+          padding: .6em;
+          line-height: 1.16;
+          font-weight: 300;
+        }
+
+        p {
+          margin: 0;
+          letter-spacing: 1px;
+          color: #fff;
+        }
+        span{
+          display: block;
+          white-space: nowrap;
+          text-transform: uppercase;
+          font-size: .75rem
+        }
+      </style>
+      <p><span>Cross Component</span>Componentes, visuales o de datos, presente en todas la aplicación...</p>
+    </template>
+    <script>
+      class ExampleCrossComponent extends Polymer.Element {
+
+        static get is() {
+          return 'example-cross-component';
+        }
+
+        // Declare properties for the element's public API
+        static get properties() {
+          return {};
+        }
+      }
+
+      customElements.define(ExampleCrossComponent.is, ExampleCrossComponent);
+    </script>
+  </dom-module>

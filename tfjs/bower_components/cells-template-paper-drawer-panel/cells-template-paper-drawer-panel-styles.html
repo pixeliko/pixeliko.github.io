@@ -1,0 +1,101 @@
+<dom-module id="cells-template-paper-drawer-panel-styles">
+    <template>
+      <style>
+        :host {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 0;
+          overflow: hidden;
+          @apply --cells-template-paper-drawer-panel;
+        }
+
+        :host([has-footer]) {
+          --cells-paper-scroll-header-container: {
+            padding-bottom: var(--cells-template-paper-drawer-panel-footer-height, 60px);
+            @apply --cells-template-paper-drawer-panel-scroll-header-container;
+          }
+          @apply --cells-template-paper-drawer-panel-has-footer;
+        }
+
+        :host([has-footer]) .app__footer {
+          position: absolute;
+          bottom: 0;
+          background-color: var(--cells-template-paper-drawer-panel-footer-bg-color, #fff);
+          height: var(--cells-template-paper-drawer-panel-footer-height, 60px);
+          width: 100%;
+          @apply --cells-template-paper-drawer-panel-footer;
+        }
+
+        :host([state="active"]) {
+          z-index: 1;
+          @apply --cells-template-paper-drawer-panel-state-active;
+        }
+
+        .app-container,
+        .app__section {
+          height: 100%;
+          @apply --cells-template-paper-drawer-panel-containersection;
+        }
+
+        .app__section {
+          overflow: hidden;
+          position: relative;
+          z-index: var(--cells-template-paper-drawer-panel-section-zindex, 0);
+          background-color: var(--cells-template-paper-drawer-panel-section-bg, #fff);
+          @apply --cells-template-paper-drawer-panel-section;
+        }
+
+        .app__header {
+          z-index: var(--cells-template-paper-drawer-panel-header-zindex, 0);
+          @apply --cells-template-paper-drawer-panel-header;
+        }
+
+        :host[relative-main] .app__main {
+          position: relative;
+          @apply(--cells-template-paper-drawer-panel-relative-main);
+        }
+
+        .app__main {
+          padding-top: var(--cells-template-paper-drawer-panel-main-padding-top, 0);
+          padding-bottom: var(--cells-template-paper-drawer-panel-main-padding-bottom, 0);
+          width: 100%;
+          @apply(--cells-template-paper-drawer-panel-main);
+        }
+
+        :host(.overflow-initial)::slotted(*) #mainContainer {
+          -webkit-overflow-scrolling: auto;
+          @apply(--cells-template-paper-drawer-panel-maincontainer);
+        }
+
+        .app__complementary {
+          height: 100%;
+          width: var(--cells-template-paper-drawer-panel-complementary-width, 100%);
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          z-index: var(--cells-template-paper-drawer-panel-complementary-zindex, 0);
+          @apply(--cells-template-paper-drawer-panel-complementary);
+        }
+
+        .app__overlay {
+          z-index: var(--cells-template-paper-drawer-panel-overlay-zindex, 0);
+          @apply(--cells-template-paper-drawer-panel-overlay);
+        }
+
+        .app__transactional {
+          z-index: var(--cells-template-paper-drawer-panel-transactional-zindex, 0);
+          position: absolute;
+          bottom: 0;
+          @apply(--cells-template-paper-drawer-panel-transactional);
+        }
+
+        :host([hidden]), [hidden] {
+          display: none !important;
+        }
+      </style>
+    </template>
+  </dom-module>

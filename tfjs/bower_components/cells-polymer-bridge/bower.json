@@ -1,0 +1,50 @@
+{
+  "name": "cells-polymer-bridge",
+  "version": "3.4.6",
+  "authors": [
+    "Cells Developers"
+  ],
+  "description": "Cells Polymer Bridge, a 'bridge' between Cells and Polymer",
+  "keywords": [
+    "core",
+    "polymer"
+  ],
+  "license": "MIT",
+  "repository": {
+    "url": "https://globaldevtools.bbva.com/bitbucket/scm/cel/cells-polymer-bridge.git"
+  },
+  "ignore": [
+    ".*",
+    "gulpfile.js",
+    "package.json",
+    "README.md",
+    "webpack.config.js",
+    "karma.conf.js",
+    "src",
+    "tpls",
+    "demo",
+    "test",
+    "coverage",
+    "util",
+    "tasks",
+    "coverage-reports"
+  ],
+  "homepage": "https://globaldevtools.bbva.com/bitbucket/projects/CEL/repos/cells-polymer-bridge",
+  "dependencies": {
+    "polymer": "Polymer#^2.0.0",
+    "webcomponentsjs": "^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "mocha": "mocha#^2.2.0",
+    "test-fixture": "^2.0.1",
+    "web-component-tester": "^4.3.5",
+    "chai-spies": "chaijs/chai-spies#^0.7.0"
+  },
+  "resolutions": {
+    "webcomponentsjs": "^v1.0.19",
+    "polymer": "^2.0.0",
+    "test-fixture": "^2.0.1"
+  },
+  "buildDate": "2018-09-19T15:25:34.671Z"
+}

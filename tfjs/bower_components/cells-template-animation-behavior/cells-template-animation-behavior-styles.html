@@ -1,0 +1,230 @@
+<dom-module id="cells-template-animation-behavior-styles"><template><style>
+:host {
+  opacity: 0;
+  will-change: transform;
+  @apply --cells-template-animation; }
+
+:host([state="cached"]:not(.static)) {
+  display: none; }
+
+:host(.template-is-visible:not([state="cached"])) {
+  z-index: 99;
+  opacity: 1; }
+
+:host(.static) {
+  opacity: 1; }
+
+:host(.template-animation-is-animating) {
+  overflow: hidden; }
+
+:host(.template-animation-moveFromRight),
+:host(.template-animation-moveToLeft),
+:host(.template-animation-moveFromLeft),
+:host(.template-animation-moveToRight),
+:host(.template-animation-moveFromBottom),
+:host(.template-animation-moveToTop),
+:host(.template-animation-moveFromTop),
+:host(.template-animation-moveToBottom),
+:host(.template-animation-fade-in),
+:host(.template-animation-fade-out),
+:host(.template-animation-static) {
+  -webkit-animation-duration: var(--cells-template-animation-duration, 230ms);
+          animation-duration: var(--cells-template-animation-duration, 230ms);
+  -webkit-animation-timing-function: var(--cells-template-animation-timing-function, cubic-bezier(0.4, 0, 0.2, 1));
+          animation-timing-function: var(--cells-template-animation-timing-function, cubic-bezier(0.4, 0, 0.2, 1));
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both; }
+
+/* horizontal */
+:host(.template-animation-moveFromRight) {
+  -webkit-animation-name: moveFromRight;
+          animation-name: moveFromRight; }
+
+:host(.template-animation-moveToLeft) {
+  -webkit-animation-name: moveToLeft;
+          animation-name: moveToLeft; }
+
+:host(.template-animation-moveFromLeft) {
+  -webkit-animation-name: moveFromLeft;
+          animation-name: moveFromLeft; }
+
+:host(.template-animation-moveToRight) {
+  -webkit-animation-name: moveToRight;
+          animation-name: moveToRight; }
+
+/*vertical*/
+:host(.template-animation-moveFromBottom) {
+  -webkit-animation-name: moveFromBottom;
+          animation-name: moveFromBottom; }
+
+:host(.template-animation-moveToTop) {
+  -webkit-animation-name: moveToTop;
+          animation-name: moveToTop; }
+
+:host(.template-animation-moveFromTop) {
+  -webkit-animation-name: moveFromTop;
+          animation-name: moveFromTop; }
+
+:host(.template-animation-moveToBottom) {
+  -webkit-animation-name: moveToBottom;
+          animation-name: moveToBottom; }
+
+/* horizontal key*/
+@-webkit-keyframes moveFromRight {
+  from {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+    z-index: 100; } }
+@keyframes moveFromRight {
+  from {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+    z-index: 100; } }
+
+@-webkit-keyframes moveToLeft {
+  to {
+    -webkit-transform: translateX(-32%);
+            transform: translateX(-32%);
+    z-index: 1; } }
+
+@keyframes moveToLeft {
+  to {
+    -webkit-transform: translateX(-32%);
+            transform: translateX(-32%);
+    z-index: 1; } }
+
+@-webkit-keyframes moveFromLeft {
+  from {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+    z-index: 100; } }
+
+@keyframes moveFromLeft {
+  from {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+    z-index: 100; } }
+
+@-webkit-keyframes moveToRight {
+  to {
+    -webkit-transform: translateX(32%);
+            transform: translateX(32%);
+    z-index: 1; } }
+
+@keyframes moveToRight {
+  to {
+    -webkit-transform: translateX(32%);
+            transform: translateX(32%);
+    z-index: 1; } }
+
+/*vettical key*/
+@-webkit-keyframes moveFromBottom {
+  from {
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+    z-index: 100; }
+  to {
+    z-index: 100; } }
+@keyframes moveFromBottom {
+  from {
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+    z-index: 100; }
+  to {
+    z-index: 100; } }
+
+@-webkit-keyframes moveToTop {
+  to {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%); } }
+
+@keyframes moveToTop {
+  to {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%); } }
+
+@-webkit-keyframes moveFromTop {
+  from {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%); } }
+
+@keyframes moveFromTop {
+  from {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%); } }
+
+@-webkit-keyframes moveToBottom {
+  from {
+    z-index: 100; }
+  to {
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+    z-index: 100;
+    opacity: 0.96; } }
+
+@keyframes moveToBottom {
+  from {
+    z-index: 100; }
+  to {
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+    z-index: 100;
+    opacity: 0.96; } }
+
+/* static */
+:host(.template-animation-static) {
+  opacity: 1;
+  -webkit-animation-name: static;
+          animation-name: static;
+  z-index: 99; }
+
+@-webkit-keyframes static {
+  from {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0); }
+  to {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0); } }
+
+@keyframes static {
+  from {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0); }
+  to {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0); } }
+
+/* fade */
+:host(.template-animation-fade-in) {
+  -webkit-animation-name: fade-in;
+          animation-name: fade-in; }
+
+:host(.template-animation-fade-out) {
+  -webkit-animation-name: fade-out;
+          animation-name: fade-out; }
+
+@-webkit-keyframes fade-in {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes fade-in {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@-webkit-keyframes fade-out {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+@keyframes fade-out {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+</style></template></dom-module>

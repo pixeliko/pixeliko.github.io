@@ -1,0 +1,42 @@
+{
+  "_args": [
+    [
+      "cells-app-template@3.0.10",
+      "/Users/e049605/BBVA/IA/tfjs-sample"
+    ]
+  ],
+  "_from": "cells-app-template@3.0.10",
+  "_id": "cells-app-template@3.0.10",
+  "_inBundle": false,
+  "_integrity": "sha1-lWPI/FdDVIz1dy7fxl2+Tfe/ze8=",
+  "_location": "/cells-app-template",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "cells-app-template@3.0.10",
+    "name": "cells-app-template",
+    "escapedName": "cells-app-template",
+    "rawSpec": "3.0.10",
+    "saveSpec": null,
+    "fetchSpec": "3.0.10"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://globaldevtools.bbva.com:443/artifactory/api/npm/npm-repo/cells-app-template/-/cells-app-template-3.0.10.tgz",
+  "_spec": "3.0.10",
+  "_where": "/Users/e049605/BBVA/IA/tfjs-sample",
+  "author": "",
+  "description": "Basic app template",
+  "keywords": [
+    "npm-library",
+    "piscosour-template",
+    "piscosour-recipe"
+  ],
+  "license": "ISC",
+  "main": "scripts/app-bootstrap.js",
+  "name": "cells-app-template",
+  "scripts": {},
+  "version": "3.0.10"
+}

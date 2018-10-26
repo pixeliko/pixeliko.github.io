@@ -1,0 +1,169 @@
+<dom-module id="link-example">
+    <template>
+      <style>
+        :host {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        article {
+          flex: 1 0 calc(50% - 4%);
+          margin: 0 2%;
+          display: flex;
+          flex-direction: column;
+          background: #fff;
+        }
+
+        button {
+          display: flex;
+          width: 100%;
+          height: 90px;
+          border: none;
+          border-radius: 2px;
+          color: #fff;
+          background-color: #4a4a4a;
+          font-size: 14px;
+          cursor: pointer;
+          padding: 0 20px;
+        }
+
+        button svg {
+          margin-left: auto;
+        }
+
+        .mark {
+          background-color: #224fbd;
+        }
+
+        .params {
+          color: #9b9b9b;
+          font-weight: 400;
+          padding: 40px 20px 20px 20px;
+          display: flex;
+          flex-direction: column;
+          align-content: center;
+        }
+
+        p {
+          margin: 0;
+          margin-bottom: .68rem;
+          text-transform: uppercase;
+
+        }
+
+        pre {
+          margin: 0;
+          font-family: inherit;
+          font-size: .95rem;
+          white-space: pre-wrap;
+          padding: 20px;
+          background: #eeeeee;
+          color: rgba(33, 33, 33, .8);
+        }
+      </style>
+
+      <article>
+        <button on-tap="_goToAnother">
+          <span>Navegar pasando Query String</span>
+          <svg width="24" height="18" viewBox="0 0 24 18">
+            <path fill="#fff" fill-opacity=".5" fill-rule="evenodd" d="M23.104 6.826L16.72.692a1.021 1.021 0 0 0-1.427.015.975.975 0 0 0 .014 1.4L21.442 8H1.032C.462 8 0 8.43 0 9c0 .57.462 1 1.032 1h20.39l-6.117 5.894a.974.974 0 0 0-.012 1.399c.39.39 1.03.395 1.427.013l6.384-6.15A3.188 3.188 0 0 0 24 9c0-.782-.296-1.576-.896-2.174z"
+            />
+          </svg>
+        </button>
+      </button>
+      <div class="params">
+        <p>app.js</p>
+        <pre>
+routes: {
+  'login': '/',
+  'another': '/another',
+  'routerExample': '/routerExample/:queryStringToPrettyUrl'
+}
+    </pre>
+      </div>
+      <div class="params">
+        <p>login.json</p>
+        <pre>
+"param-channel": {
+  "bind": "param-url-event",
+  "link": {
+    "page": "another",
+    "params": {
+      "idToSend": "idForUseInAnotherPage"
+    }
+  }
+}
+      </pre>
+      </div>
+      </article>
+      <article>
+        <button class="mark" on-tap="_goToRouterExample">
+          <span>Navegar pasando Query String y PrettyUrl</span>
+          <svg width="24" height="18" viewBox="0 0 24 18">
+            <path fill="#fff" fill-opacity=".5" fill-rule="evenodd" d="M23.104 6.826L16.72.692a1.021 1.021 0 0 0-1.427.015.975.975 0 0 0 .014 1.4L21.442 8H1.032C.462 8 0 8.43 0 9c0 .57.462 1 1.032 1h20.39l-6.117 5.894a.974.974 0 0 0-.012 1.399c.39.39 1.03.395 1.427.013l6.384-6.15A3.188 3.188 0 0 0 24 9c0-.782-.296-1.576-.896-2.174z"
+            />
+          </svg>
+        </button>
+        <div class="params">
+          <p>app.js</p>
+          <pre>
+routes: {
+  'login': '/',
+  'another': '/another',
+  'routerExample': '/routerExample/:queryStringToPrettyUrl'
+}
+      </pre>
+        </div>
+        <div class="params">
+          <p>login.json</p>
+          <pre>
+"router-channel": {
+  "bind": "router-event",
+  "link": {
+    "page": "routerExample",
+    "params": {
+      "prettyUrlToSend": "queryStringToPrettyUrl",
+      "queryString": "queryStringForUseInRouterPage",
+      "otherQueryString": "otherQueryStringForUseInRouterPage"
+    }
+  }
+}
+        </pre>
+        </div>
+      </article>
+
+    </template>
+
+    <script>
+      class LinkExample extends Polymer.Element {
+
+        static get is() {
+          return 'link-example';
+        }
+
+        // Declare properties for the element's public API
+        static get properties() {
+          return {};
+        }
+
+        _goToAnother() {
+          this.dispatchEvent(new CustomEvent('param-url-event', {
+            bubbles: true,
+            composed: true,
+            detail: { 'idToSend': 12345 }
+          }));
+        }
+
+        _goToRouterExample() {
+          this.dispatchEvent(new CustomEvent('router-event', {
+            bubbles: true,
+            composed: true,
+            detail: { 'prettyUrlToSend': 'user-pretty-url', 'queryString': 1234, 'otherQueryString': 5678 }
+          }));
+        }
+      }
+
+      customElements.define(LinkExample.is, LinkExample);
+    </script>
+
+  </dom-module>

@@ -1,0 +1,255 @@
+<dom-module id="my-greeting">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 2em 0;
+        width: 80%;
+        margin: auto;
+        margin-bottom: 2rem;
+      }
+
+      label,
+      textarea {
+        display: block;
+      }
+
+      textarea {
+        font-family: inherit;
+        display: block;
+        cursor: pointer;
+        width: 100%;
+        height: 200px;
+        background-color: transparent;
+        border: none;
+        background-color: rgba(0,0,0, .1);
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        border: solid 1px #dddddd;
+        border-bottom: solid 2px #9b9b9b;
+        font-size: 14px;
+        line-height: 1.14;
+        letter-spacing: 1px;
+        text-align: left;
+        color: #4a4a4a;
+        padding: 1em 0;
+        margin-bottom: .5rem;
+        vertical-align: top;
+      }
+      textarea:focus{
+        outline: none;
+      }
+
+      label {
+        color: #9b9b9b;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      button {
+        display: block;
+        margin: 1em 0;
+      }
+      p {
+        text-align: center
+      }
+      table {
+        width: 100%;
+      }
+      td {
+        vertical-align: top;
+        width: 50%;
+      }
+
+      tr.a {
+        background-color: #aaaaaa;
+      }
+      tr.b {
+        background-color: #cccccc;
+      }
+      tr.c {
+        background-color: #fff;
+      }
+      #output {
+        text-align: left;
+        font-size: 1em;
+      }
+    </style>
+    <textarea id="for-input"></textarea>
+    <label for="for-input">Pega aquí el tensor de entrada.</label>
+
+    <p align="center">
+        <cells-st-button><button on-click="forcePredict">Predict</button></cells-st-button>
+    </p>
+
+    <p hidden$="[[!tableVisible]]">
+      <span id="output"></span>
+    </p>
+
+  </template>
+
+  <script>
+
+    class MyGreeting extends Polymer.Element {
+
+      static get is() {
+        return 'my-greeting';
+      }
+
+     forcePredict() {
+       const text = document.querySelector('my-greeting').shadowRoot.querySelector('textarea').value;
+       processData(JSON.parse(text));
+     };
+
+     paste() {
+       console.log('paste');
+       navigator.clipboard.readText().then(
+        clipText => processData(JSON.parse(clipText))
+       );
+     };
+     random() {
+       console.log('random');
+     };
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          tableVisible: {
+            type: Boolean,
+            value: false,
+            notify: true
+          },
+          greeting: {
+            type: String,
+            value: '',
+            notify: true
+          },
+          output: {
+            type: Object,
+            value: {},
+            notify: true
+          },          
+          predictOutput: {
+            type: Object,
+            value: {},
+            notify: true
+          },
+          outputText: {
+            type: String,
+            value: '',
+            notify: true
+          }
+        };
+      }
+    }
+
+
+    class HTMLEcho extends Polymer.Element {
+      static get is() {
+        return 'html-echo';
+      }
+      static get properties() {
+        return {
+          html: {
+            type: String,
+            observer: '_htmlChanged'
+          }
+        }
+      }
+      _htmlChanged(neo) {
+        this.innerHTML = neo;
+      }
+    }
+
+    customElements.define(MyGreeting.is, MyGreeting);
+    customElements.define(HTMLEcho.is, HTMLEcho);
+  </script>
+
+<script>
+    var model;
+    async function init() {
+      model = await tf.loadFrozenModel('scripts/output/tensorflowjs_model.pb', 'scripts/output/weights_manifest.json');
+      //const data = tf.randomNormal([10, 23]);
+      let array = [];
+      /*
+      data.map((obj)=> {
+        console.log(obj);
+        array.push(obj.vector);
+      });
+      */
+      array.push(data[0].vector);
+      array = [
+        [0.0, 0.0, 0.02973885550032431, 0.0, 0.029684012060028648, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 4.803661115186031E-4, 4.2719333339171644E-7, 1.5687483680626374E-5, 9.778252578996212E-4, 0.0, 0.001440824981905819]
+      ];      
+      const tensorData = tf.tensor(array, [array.length, 23]);
+      const out = model.predict(tensorData).print();
+    }
+
+    function paste(target) {
+        function waitForPaste() {
+            if (!systemPasteReady) {
+                setTimeout(waitForPaste, 250);
+                return;
+            }
+            target.innerHTML = systemPasteContent;
+            systemPasteReady = false;
+            document.body.removeChild(textArea);
+            textArea = null;
+        }
+        // FireFox requires at least one editable
+        // element on the screen for the paste event to fire
+        textArea = document.createElement('textarea');
+        textArea.setAttribute
+            ('style', 'width:1px;border:0;opacity:0;');
+        document.body.appendChild(textArea);
+        textArea.select();
+        waitForPaste();
+    }
+    function systemPasteListener(evt) {
+        systemPasteContent = JSON.parse(evt.clipboardData.getData('text/plain'));
+      systemPasteReady = true;
+      //  evt.preventDefault();
+      processData(systemPasteContent);
+    }
+
+    function processData(systemPasteContent){
+      let array = [];
+      let len;
+      systemPasteContent.map((obj)=> {
+        if (typeof(obj) == 'number') {
+          array.push(obj);
+          len = 1;
+        } else {
+          array.push(obj.vector);
+        }
+      });
+      if (len != 1) {
+        len = array.length;
+      }
+      const tensorData = tf.tensor(array, [len, 23]);
+      const predictOut = model.predict(tensorData);
+      const data32 = predictOut.dataSync();
+      const data = (Array.prototype.slice.call(data32));
+      let output = '<table>';
+
+      for (i=0;i<data.length;i=i+2) {
+        output += '<tr class="a"><td>' + array[0] + '</td></tr>' + 
+          '<tr class="b"><td>' + data[i] + '<br>' + data[i+1] + '</td></tr>' + 
+          '<tr class="c"><td>&nbsp;</td></tr>'; 
+      }
+
+      output += '</table>';
+
+      predictOut.print();
+      document.querySelector('my-greeting').shadowRoot.querySelector('#output').innerHTML = output;
+      document.querySelector('my-greeting').output = array;
+      document.querySelector('my-greeting').tableVisible = true;
+
+    }
+
+    window.addEventListener('paste',systemPasteListener);
+    init(model);
+
+  </script>
+
+</dom-module>

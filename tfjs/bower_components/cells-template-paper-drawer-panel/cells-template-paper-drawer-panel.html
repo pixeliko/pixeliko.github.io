@@ -1,0 +1,337 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../cells-template-animation-behavior/cells-template-animation-behavior.html">
+<link rel="import" href="../cells-app-drawer/cells-app-drawer.html">
+<link rel="import" href="../cells-paper-scroll-header-panel/cells-paper-scroll-header-panel.html">
+<link rel="import" href="cells-template-paper-drawer-panel-styles.html">
+
+<!--
+
+## A set of zones elements for your template. It includes:
+
+__cells-template-paper-drawer-panel__ contains a drawer panel and a main panel. The drawer and the main panel are side-by-side with drawer on the left.
+
+  ```app__header``` - A container element for top app.
+
+  ```app__main``` - A container element main content and general manager scroll.
+
+  ```app__footer``` - A container element for bottom app.
+
+  ```app__complementary``` - A container element for drawer. [```Navigation drawer*```](https://www.google.com/design/spec/patterns/navigation-drawer.html)
+
+  ```app__overlay``` - A container element for overlay all content.
+
+  ```app__transactional``` - A container element that positions transverse layers.
+
+[__*The navigation drawer slides in from the left and contains the navigation destinations for your app.__](https://www.google.com/design/spec/patterns/navigation-drawer.html)
+
+Example cells context: *(view demo for declarative app)*
+```html
+
+<cells-template-paper-drawer-panel></cells-template-paper-drawer-panel>
+
+<cells-template-paper-drawer-panel right-drawer drawer-width="300px"></cells-template-paper-drawer-panel>
+```
+
+## Styling
+
+The following custom properties and mixins are available for styling:
+
+### Custom Properties
+| Custom Property                                          | Selector                                                     | CSS Property     | Value |
+| -------------------------------------------------------- | ------------------------------------------------------------ | ---------------- | ----- |
+| --cells-template-paper-drawer-panel-footer-height        | :host([has-footer]) > --cells-paper-scroll-header-container: | padding-bottom   |  60px |
+| --cells-template-paper-drawer-panel-footer-bg-color      | :host([has-footer]) .app__footer                             | background-color |  #fff |
+| --cells-template-paper-drawer-panel-footer-height        | :host([has-footer]) .app__footer                             | height           |  60px |
+| --cells-template-paper-drawer-panel-section-zindex       | .app__section                                                | z-index          |  0    |
+| --cells-template-paper-drawer-panel-section-bg           | .app__section                                                | background-color |  #fff |
+| --cells-template-paper-drawer-panel-header-zindex        | .app__header                                                 | z-index          |  0    |
+| --cells-template-paper-drawer-panel-main-padding-top     | .app__main                                                   | padding-top      |  0    |
+| --cells-template-paper-drawer-panel-main-padding-bottom  | .app__main                                                   | padding-bottom   |  0    |
+| --cells-template-paper-drawer-panel-complementary-width  | .app__complementary                                          | width            |  100% |
+| --cells-template-paper-drawer-panel-complementary-zindex | .app__complementary                                          | z-index          |  0    |
+| --cells-template-paper-drawer-panel-overlay-zindex       | .app__overlay                                                | z-index          |  0    |
+| --cells-template-paper-drawer-panel-transactional-zindex | .app__transactional                                          | z-index          |  0    |
+### @apply
+| Mixins                                                      | Selector                                                     | Value |
+| ----------------------------------------------------------- | ------------------------------------------------------------ | ----- |
+| --cells-template-paper-drawer-panel                         | :host                                                        | {}    |
+| --cells-template-paper-drawer-panel-scroll-header-container | :host([has-footer]) > --cells-paper-scroll-header-container: | {}    |
+| --cells-template-paper-drawer-panel-has-footer              | :host([has-footer])                                          | {}    |
+| --cells-template-paper-drawer-panel-footer                  | :host([has-footer]) .app__footer                             | {}    |
+| --cells-template-paper-drawer-panel-state-active            | :host([state="active"])                                      | {}    |
+| --cells-template-paper-drawer-panel-containersection        | .app__section                                                | {}    |
+| --cells-template-paper-drawer-panel-section                 | .app__section                                                | {}    |
+| --cells-template-paper-drawer-panel-header                  | .app__header                                                 | {}    ||
+
+
+@demo demo/index.html
+@hero cells-template-paper-drawer-panel.png
+@composer
+@description Template with Polymer __paper drawer panel__
+@type template
+@platforms android, desktop, ios
+@family cells-catalog-templates-family
+-->
+<dom-module id="cells-template-paper-drawer-panel">
+  <template>
+    <style include="cells-template-paper-drawer-panel-styles cells-template-paper-drawer-panel-shared-styles cells-template-animation-behavior-styles"></style>
+    <cells-app-drawer
+      id="app-container"
+      class="app-container"
+      force-narrow
+      right-drawer="[[rightDrawer]]"
+      drawer-width="[[drawerWidth]]"
+      disable-edge-swipe="[[disableEdgeSwipe]]"
+      edge-swipe-sensitivity="[[edgeSwipeSensitivity]]"
+      on-content-scroll="_onContentScroll"
+      on-selected-changed="_onSelectedChanged"
+      peeking="{{peeking}}"
+      dragging="{{dragging}}"
+      scale-content>
+      <cells-paper-scroll-header-panel fixed="[[headerFixed]]" class="app__section" id="app__section" main slot="main" header-height="[[headerHeight]]"
+        configurations-number="[[configurationsNumber]]">
+        <header class="app__header paper-header" id="app__header" hidden$="[[headerHidden]]" slot="header-content">
+          <slot name="app__header"></slot>
+        </header>
+        <div class="app__main app__scroller-list" id="app__main" slot="main-content">
+          <slot name="app__main"></slot>
+        </div>
+      </cells-paper-scroll-header-panel>
+
+      <footer class="app__footer" id="app__footer" slot="footer">
+        <slot name="app__footer"></slot>
+      </footer>
+
+      <aside drawer id="app__complementary" class="app__complementary" slot="drawer">
+        <slot name="app__complementary"></slot>
+      </aside>
+    </cells-app-drawer>
+    <div class="app__overlay" id="app__overlay">
+      <slot select="app__overlay"></slot>
+    </div>
+    <div class="app__transactional" id="app__transactional">
+      <slot select="app__transactional"></slot>
+    </div>
+  </template>
+  <script>
+    Polymer({
+
+      /**
+       * Fired when the content has been scrolled.
+       *
+       * @event template-content-scroll
+       */
+
+      is: 'cells-template-paper-drawer-panel',
+
+      hostAttributes: {
+        'data-template': true,
+      },
+
+      behaviors: [
+        Polymer.CellsTemplateAnimationBehavior
+      ],
+
+      properties: {
+
+        /**
+         * If true, position the drawer to the right.
+         */
+        rightDrawer: {
+          type: Boolean,
+          value: false,
+        },
+
+        /**
+         * If true, swipe to open/close the drawer is disabled.
+         * Default:false
+         */
+        disableEdgeSwipe: {
+          type: Boolean,
+          value: false,
+        },
+
+        /**
+         * Hides the header.
+         */
+        headerHidden: {
+          type: Boolean,
+          value: false,
+        },
+
+        /**
+         * How many pixels on the side of the screen are sensitive to edge swipes and peek.
+         */
+        edgeSwipeSensitivity: {
+          type: Number,
+          value: 20,
+        },
+
+        /**
+         * Choose add css attribute position:relative in main content ('false', or 'true').
+         * Default:false
+         */
+        relativeMain: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+        },
+
+        /**
+         * The width of the drawer.
+         * Default: 80%
+         */
+        drawerWidth: {
+          type: String,
+          value: '80%',
+        },
+
+        /**
+         * If true, the header is fixed to the top and never moves away.
+         */
+        headerFixed: {
+          type: Boolean,
+          value: false,
+        },
+
+        /**
+         * Selected panel: 'drawer' or 'main'.
+         */
+        selected: {
+          type: String,
+          value: null,
+          notify: true,
+          readOnly: true,
+        },
+
+        /**
+         * Notifies if the menu is opened or not.
+         */
+        menuOpened: {
+          type: Boolean,
+          value: false,
+          notify: true,
+          readOnly: true,
+          reflectToAttribute: true,
+        },
+
+        /**
+         * Sets wheter to disable scrolling when the menu is opened.
+         */
+        disableScrollLock: {
+          type: Boolean,
+          value: false,
+        },
+        /**
+         * Footer height in px.
+         * Can be set either by using a custom CSS property (--app__footer-height) or by setting
+         * footerHeight. Default value for --app__footer-height is 60px.
+         */
+        footerHeight: {
+          type: Number,
+          observer: '_updateFooterHeight',
+        },
+        /**
+         * Set to true if the template has footer or coexists with a external footer
+         */
+        hasFooter: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+        }
+      },
+
+      listeners: {
+        'overlay-opening': '_removeOverflow',
+        'overlay-closed': '_addOverflow',
+        'toggle-menu': 'toggleMenu',
+        'template-cached': '_resetLayerScroll',
+        'change-template-animation': '_onChangeAnimation',
+      },
+
+      attached: function() {
+        const headerPanel = this.$.app__section;
+        requestAnimationFrame(function() {
+          headerPanel.measureHeaderHeight();
+        });
+      },
+
+      /**
+       * Open/closes the menu panel
+       */
+      toggleMenu: function() {
+        this.$['app-container'].togglePanel();
+      },
+
+      _onSelectedChanged: function(e) {
+        this.$['app-container'].updateStyles(); // force update!
+        this._setSelected(e.detail.value);
+
+        if (e.detail.value === 'drawer') {
+          this._setMenuOpened(true);
+          if (!this.disableScrollLock) {
+            this._removeOverflow();
+          }
+        } else {
+          this._setMenuOpened(false);
+          if (!this.disableScrollLock) {
+            this._addOverflow();
+          }
+        }
+      },
+
+      /**
+       * Add scroll bar
+       */
+      _addOverflow: function() {
+        this.classList.remove('overflow-initial');
+      },
+
+      /**
+       * Remove scroll bar
+       */
+      _removeOverflow: function() {
+        this.classList.add('custom-transition');
+        this.classList.add('overflow-initial');
+      },
+
+      /**
+       * Move scroll to 0
+       */
+      _resetLayerScroll: function() {
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this.$.app__section.scrollToTop(true);
+        });
+      },
+
+      _onChangeAnimation: function(ev) {
+        ev.stopPropagation();
+        this.animationType = ev.detail.animationType;
+      },
+
+      _onContentScroll: function(ev) {
+        ev.stopPropagation();
+        this.dispatchEvent(new CustomEvent('template-content-scroll', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            scrollTop: ev.detail.target.scrollTop,
+            target: ev.detail.target
+          }
+        }));
+      },
+
+      _updateFooterHeight: function(footerHeight) {
+        if (this.hasFooter) {
+          if (Polymer.Element) {
+            this.updateStyles({'--cells-template-paper-drawer-panel-footer-height': footerHeight + 'px'});
+          } else {
+            this.customStyle['--cells-template-paper-drawer-panel-footer-height'] = footerHeight + 'px';
+            this.updateStyles();
+          }
+        }
+      },
+    });
+
+  </script>
+</dom-module>
