@@ -128,7 +128,7 @@
             type: Object,
             value: {},
             notify: true
-          },          
+          },
           predictOutput: {
             type: Object,
             value: {},
@@ -169,18 +169,7 @@
     var model;
     async function init() {
       model = await tf.loadFrozenModel('scripts/output/tensorflowjs_model.pb', 'scripts/output/weights_manifest.json');
-      //const data = tf.randomNormal([10, 23]);
       let array = [];
-      /*
-      data.map((obj)=> {
-        console.log(obj);
-        array.push(obj.vector);
-      });
-      */
-      array.push(data[0].vector);
-      array = [
-        [0.0, 0.0, 0.02973885550032431, 0.0, 0.029684012060028648, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 4.803661115186031E-4, 4.2719333339171644E-7, 1.5687483680626374E-5, 9.778252578996212E-4, 0.0, 0.001440824981905819]
-      ];      
       const tensorData = tf.tensor(array, [array.length, 23]);
       const out = model.predict(tensorData).print();
     }
@@ -191,7 +180,7 @@
                 setTimeout(waitForPaste, 250);
                 return;
             }
-            target.innerHTML = systemPasteContent;
+            target.innerHTML = systemPasteContent.trim();
             systemPasteReady = false;
             document.body.removeChild(textArea);
             textArea = null;
@@ -206,7 +195,7 @@
         waitForPaste();
     }
     function systemPasteListener(evt) {
-        systemPasteContent = JSON.parse(evt.clipboardData.getData('text/plain'));
+        systemPasteContent = JSON.parse(evt.clipboardData.getData('text/plain').trim());
       systemPasteReady = true;
       //  evt.preventDefault();
       processData(systemPasteContent);
@@ -233,9 +222,9 @@
       let output = '<table>';
 
       for (i=0;i<data.length;i=i+2) {
-        output += '<tr class="a"><td>' + array[0] + '</td></tr>' + 
-          '<tr class="b"><td>' + data[i] + '<br>' + data[i+1] + '</td></tr>' + 
-          '<tr class="c"><td>&nbsp;</td></tr>'; 
+        output += '<tr class="a"><td>' + array[0] + '</td></tr>' +
+          '<tr class="b"><td>' + data[i] + '<br>' + data[i+1] + '</td></tr>' +
+          '<tr class="c"><td>&nbsp;</td></tr>';
       }
 
       output += '</table>';
